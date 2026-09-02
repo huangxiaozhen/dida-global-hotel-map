@@ -13,6 +13,10 @@
 
 数据来自 Dida 酒店静态信息的聚合结果。仓库不包含原始 CSV、酒店 ID、酒店名称、地址、坐标、房型、订单、价格、库存、账户凭据或个人信息。页面展示的是静态覆盖量，不代表实时可售库存。
 
+## 在线访问
+
+[打开全球酒店地图](https://huangxiaozhen.github.io/dida-global-hotel-map/)
+
 ## 直接使用
 
 打开 `standalone/index.html` 即可离线使用，不需要安装依赖或连接网络。
