@@ -268,6 +268,13 @@ export default function Home() {
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
               悬停查看国家酒店数，点击国家后按 DestinationID 查看目的地，并可搜索深圳及周边等区域。
             </p>
+            <button
+              type="button"
+              onClick={() => window.location.assign('./hokkaido/index.html')}
+              className="mt-4 inline-flex min-h-10 items-center rounded-lg border border-primary/25 bg-primary/8 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              查看北海道 4,251 家酒店点位 →
+            </button>
           </div>
           <div className="grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <div>

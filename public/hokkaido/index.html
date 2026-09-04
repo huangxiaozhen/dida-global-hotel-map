@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="在公开地图上查看 Dida 北海道酒店静态分布，点击点位查看酒店详情。"
+    />
+    <title>北海道酒店地图 · Dida</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="title-group">
+          <a class="back-link" href="../" aria-label="返回全球酒店地图">← 全球地图</a>
+          <div>
+            <p class="eyebrow">Dida 酒店静态信息</p>
+            <h1>北海道酒店地图</h1>
+          </div>
+        </div>
+        <div class="summary" aria-label="数据概况">
+          <div><strong id="total-hotels">—</strong><span>酒店记录</span></div>
+          <div><strong id="mapped-hotels">—</strong><span>地图点位</span></div>
+          <div><strong id="destination-count">—</strong><span>Destination</span></div>
+        </div>
+      </header>
+
+      <section class="toolbar" aria-label="地图筛选">
+        <label class="search-field">
+          <span>搜索酒店</span>
+          <div class="search-control">
+            <input
+              id="hotel-search"
+              type="search"
+              placeholder="输入酒店名称、HotelID、城市或地址"
+              autocomplete="off"
+            />
+            <button id="search-clear" type="button" hidden>清除</button>
+          </div>
+          <div id="search-results" class="search-results" hidden></div>
+        </label>
+        <label class="destination-field">
+          <span>目的地</span>
+          <select id="destination-select" aria-label="选择北海道目的地">
+            <option value="">全部目的地</option>
+          </select>
+        </label>
+        <button id="reset-map" class="reset-button" type="button">查看全北海道</button>
+        <p id="visible-summary" class="visible-summary">正在载入酒店点位…</p>
+      </section>
+
+      <div class="workspace">
+        <section class="map-panel" aria-label="北海道酒店点位地图">
+          <div id="map" role="application" aria-label="可缩放的北海道酒店地图"></div>
+          <div class="map-key" aria-hidden="true">
+            <span class="key-dot"></span>
+            <span>单家酒店</span>
+            <span class="key-cluster">12</span>
+            <span>聚合点位</span>
+          </div>
+          <div id="map-error" class="map-error" hidden>
+            地图底图暂时无法载入。酒店搜索和详情仍可使用。
+          </div>
+        </section>
+
+        <aside class="detail-panel" aria-live="polite">
+          <div id="detail-empty" class="detail-empty">
+            <div class="empty-marker" aria-hidden="true">＋</div>
+            <h2>选择一家酒店</h2>
+            <p>点击地图上的酒店点位，或在上方搜索酒店名称。</p>
+          </div>
+
+          <article id="hotel-detail" hidden>
+            <div class="detail-heading">
+              <p id="detail-destination" class="detail-destination"></p>
+              <h2 id="detail-name"></h2>
+              <p id="detail-name-en" class="detail-name-en"></p>
+            </div>
+            <dl class="detail-list">
+              <div><dt>HotelID</dt><dd id="detail-id"></dd></div>
+              <div><dt>城市</dt><dd id="detail-city"></dd></div>
+              <div><dt>地址</dt><dd id="detail-address"></dd></div>
+              <div><dt>邮编</dt><dd id="detail-zip"></dd></div>
+              <div><dt>星级</dt><dd id="detail-star"></dd></div>
+              <div><dt>住宿类型代码</dt><dd id="detail-category"></dd></div>
+              <div><dt>DestinationID</dt><dd id="detail-destination-id"></dd></div>
+              <div><dt>经纬度</dt><dd id="detail-coordinates"></dd></div>
+              <div><dt>静态信息更新</dt><dd id="detail-updated"></dd></div>
+            </dl>
+            <a
+              id="osm-link"
+              class="map-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >在 OpenStreetMap 查看位置 ↗</a>
+            <p id="coordinate-note" class="coordinate-note" hidden>
+              这家酒店在源数据中没有经纬度，因此没有生成地图点位。
+            </p>
+          </article>
+        </aside>
+      </div>
+
+      <footer class="footer-note">
+        <p>
+          点位来自 Dida 酒店静态信息中的经纬度。底图与地名来自 OpenStreetMap；页面不进行批量地图下载或实时地理编码。
+        </p>
+        <p>
+          酒店数量代表静态内容覆盖，不代表当前营业、实时可售、持证住宿或房间数量。
+        </p>
+      </footer>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script src="./hokkaido-hotels.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

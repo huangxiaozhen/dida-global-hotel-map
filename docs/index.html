@@ -96,6 +96,8 @@
     h2 { margin-bottom: 6px; font-size: 24px; line-height: 1.2; letter-spacing: -0.02em; }
     h3 { margin-bottom: 4px; font-size: 16px; }
     .subtitle { max-width: 760px; margin-bottom: 0; color: var(--muted); }
+    .feature-link { display: inline-flex; align-items: center; min-height: 40px; margin-top: 14px; padding: 8px 13px; border: 1px solid rgba(12, 102, 137, .24); border-radius: 9px; color: var(--primary); background: rgba(11, 128, 165, .06); font-size: 13px; font-weight: 700; text-decoration: none; transition: background .18s ease, border-color .18s ease; }
+    .feature-link:hover, .feature-link:focus-visible { border-color: rgba(12, 102, 137, .45); background: rgba(11, 128, 165, .12); outline: none; }
 
     .kpis {
       display: grid;
@@ -379,6 +381,7 @@
           <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Dida 全球酒店静态分布</p>
           <h1>全球酒店地图与 Destination 钻取</h1>
           <p class="subtitle">悬停查看国家酒店数，点击国家后按 DestinationID 查看目的地，并可搜索深圳及周边等区域。</p>
+          <a class="feature-link" href="./hokkaido/index.html">查看北海道 4,251 家酒店点位 →</a>
         </div>
         <div class="kpis" aria-label="全局指标">
           <div class="kpi"><strong id="kpi-hotels">—</strong><span>唯一 HotelID</span></div>
